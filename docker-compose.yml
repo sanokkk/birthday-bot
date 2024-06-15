@@ -1,0 +1,32 @@
+networks:
+  rutube:
+    driver: bridge
+
+services:
+  pg:
+    restart: always
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admax
+      - POSTGRES_DB=rutube
+    networks:
+      - rutube
+    volumes:
+      - ./volumes:/var/lib/volumes/pg
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: on-failure
+    networks:
+      - rutube
+    environment:
+      - ENV=dev
+      - BOT_KEY=YOUR_KEY
+    depends_on:
+      - pg
+

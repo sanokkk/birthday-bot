@@ -1,0 +1,1 @@
+ConnectionString : "host=pg user=admin password=admax dbname=rutube port=5432 sslmode=disable"
